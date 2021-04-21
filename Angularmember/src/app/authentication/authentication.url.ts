@@ -1,3 +1,3 @@
 export const AuthURL = {
-    dashboard: 'dashboard'
+    Dashboard: 'dashboard'
 };
