@@ -5,6 +5,8 @@ import { AuthenticationRouting } from './authentication.routing';
 import { SharedsModule } from '../shareds/shareds.module';
 import { SettingComponent } from './components/setting/setting.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { BootstrapElementsComponent } from './components/bootstrap-elements/bootstrap-elements.component';
+import { CardsComponent } from './components/cards/cards.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -14,7 +16,9 @@ import { ProfileComponent } from './components/profile/profile.component';
   declarations: [
     DashboardComponent,
     SettingComponent,
-    ProfileComponent
+    ProfileComponent,
+    BootstrapElementsComponent,
+    CardsComponent
   ]
 })
 export class AuthenticationModule { }
