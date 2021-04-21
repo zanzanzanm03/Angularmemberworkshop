@@ -10,12 +10,12 @@
     </div>
     <ul class="app-menu">
         <li>
-            <a class="app-menu__item active" [routerLink]="['/', AppURL.Authen, AuthURL.Dashboard]">
+            <a class="app-menu__item " [routerLink]="['/', AppURL.Authen, AuthURL.Dashboard]" routerLinkActive='active'>
                 <i class="app-menu__icon fa fa-dashboard"></i>
                 <span class="app-menu__label">แดชบอร์ด</span>
             </a>
         </li>
-        <li class="treeview">
+        <li class="treeview" routerLinkActive='is-expanded'>
             <a class="app-menu__item" href="#" data-toggle="treeview">
                 <i class="app-menu__icon fa fa-users"></i>
                 <span class="app-menu__label">ส่วนของสมาชิก</span>
@@ -23,41 +23,41 @@
             </a>
             <ul class="treeview-menu">
                 <li>
-                    <a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.Member]">
+                    <a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.Member]" routerLinkActive='active'>
                         <i class="icon fa fa-circle-o"></i> รายการสมาชิก
                     </a>
                 </li>
                 <li>
-                    <a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.MemberCreate]">
+                    <a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.MemberCreate]" routerLinkActive='active'>
                         <i class="icon fa fa-circle-o"></i> เพิ่มสมาชิกใหม่
                     </a>
                 </li>
             </ul>
         </li>
         <li class="treeview">
-            <a class="app-menu__item" href="#" data-toggle="treeview">
+            <a class="app-menu__item" href="#" data-toggle="treeview" routerLinkActive='active'>
                 <i class="app-menu__icon fa fa-laptop"></i>
                 <span class="app-menu__label">ส่วนของหน้า UI</span>
                 <i class="treeview-indicator fa fa-angle-right"></i>
             </a>
             <ul class="treeview-menu">
                 <li>
-                    <a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.Element]">
+                    <a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.Element]" routerLinkActive='active'>
                         <i class="icon fa fa-circle-o"></i> Bootstrap Elements
                     </a>
                 </li>
                 <li>
-                    <a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener">
+                    <a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener" routerLinkActive='active'>
                         <i class="icon fa fa-circle-o"></i> Font Icons
                     </a>
                 </li>
                 <li>
-                    <a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.Card]">
+                    <a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.Card]" routerLinkActive='active'>
                         <i class="icon fa fa-circle-o"></i> Cards
                     </a>
                 </li>
                 <li>
-                    <a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.Widget]">
+                    <a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.Widget]" routerLinkActive='active'>
                         <i class="icon fa fa-circle-o"></i> Widgets
                     </a>
                 </li>
