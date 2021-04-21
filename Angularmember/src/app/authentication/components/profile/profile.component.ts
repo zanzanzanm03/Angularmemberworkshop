@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { AuthenService } from 'src/app/services/authen.service';
 import { AccountService } from 'src/app/shareds/services/account.service';
 import { AlertService } from 'src/app/shareds/services/alert.service';
@@ -15,13 +16,15 @@ export class ProfileComponent implements IProfileComponent {
     private buider: FormBuilder,
     private account: AccountService,
     private authen: AuthenService,
-    private alert: AlertService
+    private alert: AlertService,
+    private modalService: BsModalService
   ) {
     this.initialCreateFormData();
     this.initialLoadUpdateFormData();
   }
 
   form: FormGroup;
+  modalRef: BsModalRef;
   positionItems: any[] = [
     'student1',
     'student2'
@@ -54,6 +57,11 @@ export class ProfileComponent implements IProfileComponent {
     reader.addEventListener('load', () => {
       imageControl.setValue(reader.result);
     });
+  }
+
+  // เปิด Modal dialog
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
   // สร้างฟอร์ม 
