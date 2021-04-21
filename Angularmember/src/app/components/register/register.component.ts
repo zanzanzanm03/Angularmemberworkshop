@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AppURL } from '../../app.url';
 import { IRegisterComponent } from './register.interface';
-import { FormGroup, FormBuilder } from '@angular/forms';
-
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AlertService } from 'src/app/shareds/services/alert.service';
+declare let $;
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -10,7 +11,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class RegisterComponent implements IRegisterComponent {
   constructor(
-    private builder: FormBuilder
+    private builder: FormBuilder,
+    private alert: AlertService
   ) {
     this.initialCreateFormData();
   }
@@ -20,17 +22,21 @@ export class RegisterComponent implements IRegisterComponent {
 
   // ลงทะเบียน
   onSubmit() {
+    if (this.form.invalid)
+      return this.alert.someting_wrong();
     console.log(this.form.value);
   }
 
   // สร้างฟอร์ม
   private initialCreateFormData() {
     this.form = this.builder.group({
-      firstname: [],
-      lastname: [],
-      email: [],
-      password: [],
-      cpassword: []
+      firstname: ['', [Validators.required]],
+      lastname: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      cpassword: ['', [Validators.required]]
     });
   }
+
+  // สร้าง validate เอง
 }
