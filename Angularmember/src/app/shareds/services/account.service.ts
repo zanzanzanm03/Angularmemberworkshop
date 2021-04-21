@@ -8,7 +8,7 @@ import { IRegister } from '../../components/register/register.interface';
 })
 export class AccountService {
 
-    private mockUserItems: IAccount[] = [
+    public mockUserItems: IAccount[] = [
         {
             id: 1,
             firstname: 'ณธกร',
@@ -17,6 +17,7 @@ export class AccountService {
             password: '0836169882',
             position: 'Student',
             image: null,
+            role: IRoleAccount.Users,
             created: new Date(),
             updated: new Date()
         },
@@ -28,6 +29,7 @@ export class AccountService {
             password: '0632692389',
             position: 'student2',
             image: null,
+            role: IRoleAccount.Admin,
             created: new Date(),
             updated: new Date()
         }
@@ -100,6 +102,13 @@ export interface IAccount {
     id?: any;
     position?: string;
     image?: string;
+    role?: IRoleAccount;
     created?: Date;
     updated?: Date;
+}
+
+export enum IRoleAccount {
+    Member,
+    Users,
+    Admin
 }
