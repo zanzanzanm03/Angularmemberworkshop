@@ -36,7 +36,6 @@ import { ValidatorsService } from './services/validators.service';
   ],
   providers: [
     AlertService,
-    AccountService,
     ValidatorsService
   ]
 })

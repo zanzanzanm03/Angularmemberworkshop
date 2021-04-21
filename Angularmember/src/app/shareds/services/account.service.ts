@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
+import { IChangePassword } from 'src/app/authentication/components/profile/change-password/change-password.interface';
 import { IProfile } from 'src/app/authentication/components/profile/profile.interface';
 import { ILogin } from 'src/app/components/login/login.interface';
 import { IRegister } from '../../components/register/register.interface';
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AccountService {
 
     private mockUserItems: IAccount[] = [
@@ -30,6 +33,18 @@ export class AccountService {
         }
 
     ];
+
+    //  เปลี่ยนรหัสผ่านใหม่
+    onChangePassword(accessToken: string, model: IChangePassword) {
+        return new Promise((resolve, reject) => {
+            const userProfile = this.mockUserItems.find(item => item.id == accessToken);
+            if (!userProfile) return reject({ Message: 'ไม่มีข้อมูลผู้ใช้งาน' });
+            if (userProfile.password !== model.old_pass) return reject({ Message: 'รหัสผ่านเดิมไม่ถูกต้อง' });
+            userProfile.password = model.new_pass;
+            userProfile.updated = new Date();
+            resolve(userProfile);
+        });
+    }
 
     // แก้ไขข้อมูลส่วนตัว Update profile
     onUpdateProfile(accessToken: string, model: IProfile) {
