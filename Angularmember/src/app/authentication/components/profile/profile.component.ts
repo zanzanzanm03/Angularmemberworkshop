@@ -32,6 +32,18 @@ export class ProfileComponent implements IProfileComponent {
     console.log(this.form.value);
   }
 
+  // แปลงไฟล์รูปเป็น Base64
+  onConvertImage(input: HTMLInputElement) {
+    const imageControl = this.form.controls['image'];
+    imageControl.setValue(null);
+    if (input.files.length == 0) return;
+    const reader = new FileReader();
+    reader.readAsDataURL(input.files[0]);
+    reader.addEventListener('load', () => {
+      imageControl.setValue(reader.result);
+    });
+  }
+
   // สร้างฟอร์ม 
   private initialCreateFormData() {
     this.form = this.buider.group({
