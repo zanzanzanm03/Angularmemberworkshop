@@ -4,7 +4,7 @@ import { IRegister } from '../../components/register/register.interface';
 @Injectable()
 export class AccountService {
 
-    mockUserItems: IAccount[] = [
+    private mockUserItems: IAccount[] = [
         {
             id: 1,
             firstname: 'ณธกร',
@@ -12,11 +12,32 @@ export class AccountService {
             email: 'nathakorn@hotmail.com',
             password: '0836169882',
             position: 'Student',
-            image: 'https://scontent.furt2-1.fna.fbcdn.net/v/t1.6435-9/115745071_3000438766749237_4464221486658742349_n.jpg?_nc_cat=106&ccb=1-3&_nc_sid=09cbfe&_nc_eui2=AeElR1h_kM3OnmAHSWehyHJhekPcaDnzzNh6Q9xoOfPM2NLl8VetQu18SGFby8jNV65NPHYIsAMU1P1GGXVl-QpT&_nc_ohc=BZgg2ywXqi8AX97FjKH&_nc_ht=scontent.furt2-1.fna&oh=420bc65cd6cb0b8efee0eb1e1d465c16&oe=60A66AFD',
+            image: null,
+            created: new Date(),
+            updated: new Date()
+        },
+        {
+            id: 2,
+            firstname: 'วรากร',
+            lastname: 'จิระดารากุล',
+            email: 'warakorn@hotmail.com',
+            password: '0632692389',
+            position: 'student2',
+            image: null,
             created: new Date(),
             updated: new Date()
         }
+
     ];
+
+    // ดึงข้อมูลผู้ที่เข้าสู่ระบบจาก Token
+    getUserLogin(accessToken: string) {
+        return new Promise<IAccount>((resolve, reject) => {
+            const userLogin = this.mockUserItems.find(m => m.id == accessToken);
+            if (!userLogin) return reject({ Message: 'accessToken ไม่ถูกต้อง' });
+            resolve(userLogin);
+        });
+    }
 
     // เข้าสู่ระบบ
     onLogin(model: ILogin) {
