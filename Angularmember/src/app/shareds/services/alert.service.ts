@@ -7,7 +7,7 @@ export class AlertService {
     notify(message: string, type: string = 'warning') {
         $.notify({
             // options
-            title: 'แจ้งเตือนจากระบบ : ',
+            title: 'แจ้งเตือน : ',
             message: message,
         }, {
             // settings
@@ -50,7 +50,7 @@ export class AlertService {
         });
     }
 
-    someting_wrong(message: string = 'ข้อมูลบางอย่างไม่ถูกต้อง กรุณาลองอีกครั้ง') {
+    someting_wrong(message: string = 'กรุณาลองอีกครั้ง') {
         this.notify(message);
     }
 
