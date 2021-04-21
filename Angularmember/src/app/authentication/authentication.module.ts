@@ -7,6 +7,8 @@ import { SettingComponent } from './components/setting/setting.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { BootstrapElementsComponent } from './components/bootstrap-elements/bootstrap-elements.component';
 import { CardsComponent } from './components/cards/cards.component';
+import { MembersComponent } from './components/members/members.component';
+import { MemberCreateComponent } from './components/member-create/member-create.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -18,7 +20,9 @@ import { CardsComponent } from './components/cards/cards.component';
     SettingComponent,
     ProfileComponent,
     BootstrapElementsComponent,
-    CardsComponent
+    CardsComponent,
+    MembersComponent,
+    MemberCreateComponent
   ]
 })
 export class AuthenticationModule { }

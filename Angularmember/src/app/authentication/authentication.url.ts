@@ -4,5 +4,6 @@ export const AuthURL = {
     Profile: 'profile',
     Element: 'bootstrap-elements',
     Card: 'cards',
-
+    Member: 'members',
+    MemberCreate: 'member-create'
 };
