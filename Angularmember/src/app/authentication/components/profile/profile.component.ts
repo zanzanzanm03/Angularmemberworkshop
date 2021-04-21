@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenService } from 'src/app/services/authen.service';
 import { AccountService } from 'src/app/shareds/services/account.service';
 import { AlertService } from 'src/app/shareds/services/alert.service';
@@ -29,14 +29,26 @@ export class ProfileComponent implements IProfileComponent {
 
   // บันทึกข้อมูล
   onSubmit() {
-    console.log(this.form.value);
+    if (this.form.invalid) return this.alert.someting_wrong();
+    this.account
+      .onUpdateProfile(this.authen.getAuthenticated(), this.form.value)
+      .then(() => this.alert.notify('แก้ไขข้อมูลสำเร็จ', 'info'))
+      .catch(err => this.alert.notify(err.Message));
   }
 
   // แปลงไฟล์รูปเป็น Base64
   onConvertImage(input: HTMLInputElement) {
     const imageControl = this.form.controls['image'];
+    const imageTypes = ['image/jpeg', 'image/png'];
+
     imageControl.setValue(null);
     if (input.files.length == 0) return;
+    // ตรวจสอบชนิดไฟล์ที่อัพโหลดเข้ามา
+    if (imageTypes.indexOf(input.files[0].type) < 0) {
+      input.value = null;
+      return this.alert.notify('กรุณาอัพโหลดรูปภาพเท่านั้น');
+    }
+
     const reader = new FileReader();
     reader.readAsDataURL(input.files[0]);
     reader.addEventListener('load', () => {
@@ -48,9 +60,9 @@ export class ProfileComponent implements IProfileComponent {
   private initialCreateFormData() {
     this.form = this.buider.group({
       email: [''],
-      firstname: [''],
-      lastname: [''],
-      position: [''],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      position: ['', Validators.required],
       image: [null]
     });
     // disabled อีเมล์

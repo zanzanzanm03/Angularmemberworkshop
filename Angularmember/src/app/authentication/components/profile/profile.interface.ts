@@ -6,3 +6,10 @@ export interface IProfileComponent {
     onSubmit(): void;
     onConvertImage(inputFile: HTMLInputElement): void;
 }
+
+export interface IProfile {
+    firstname: string;
+    lastname: string;
+    position: string;
+    image: string;
+}

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IProfile } from 'src/app/authentication/components/profile/profile.interface';
 import { ILogin } from 'src/app/components/login/login.interface';
 import { IRegister } from '../../components/register/register.interface';
 @Injectable()
@@ -29,6 +30,20 @@ export class AccountService {
         }
 
     ];
+
+    // แก้ไขข้อมูลส่วนตัว Update profile
+    onUpdateProfile(accessToken: string, model: IProfile) {
+        return new Promise((resolve, reject) => {
+            const userProfile = this.mockUserItems.find(user => user.id == accessToken);
+            if (!userProfile) return reject({ Message: 'ไม่มีผู้ใช้งานนี้ในระบบ' });
+            userProfile.firstname = model.firstname;
+            userProfile.lastname = model.lastname;
+            userProfile.position = model.position;
+            userProfile.image = model.image;
+            userProfile.updated = new Date();
+            resolve(userProfile);
+        });
+    }
 
     // ดึงข้อมูลผู้ที่เข้าสู่ระบบจาก Token
     getUserLogin(accessToken: string) {
