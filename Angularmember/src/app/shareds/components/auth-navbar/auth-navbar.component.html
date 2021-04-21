@@ -126,7 +126,7 @@
                       <i class="fa fa-user fa-lg"></i> ข้อมูลส่วนตัว</a>
               </li>
               <li>
-                  <a class="dropdown-item" [routerLink]="['/', AppURL.Login]">
+                  <a class="dropdown-item" (click)="onLogout()">
                       <i class="fa fa-sign-out fa-lg"></i> ออกจากระบบ</a>
               </li>
           </ul>
