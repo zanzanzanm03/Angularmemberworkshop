@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { AlertService } from '../../shareds/services/alert.service';
 import { AccountService } from '../../shareds/services/account.service';
 import { Router } from '@angular/router';
+import { ValidatorsService } from 'src/app/shareds/services/validators.service';
 declare let $;
 @Component({
   selector: 'app-register',
@@ -16,7 +17,8 @@ export class RegisterComponent implements IRegisterComponent {
     private builder: FormBuilder,
     private alert: AlertService,
     private account: AccountService,
-    private router: Router
+    private router: Router,
+    private validators: ValidatorsService
   ) {
     this.initialCreateFormData();
   }
@@ -45,22 +47,9 @@ export class RegisterComponent implements IRegisterComponent {
       lastname: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern(/^[A-z0-9]{6,15}$/)]],
-      cpassword: ['', [Validators.required, this.comparePassword('password')]]
+      cpassword: ['', [Validators.required, this.validators.comparePassword('password')]]
     });
   }
 
-  // สร้าง validate เอง
-  private comparePassword(passwordField: string) {
-    return function (confirm_password: AbstractControl) {
-      if (!confirm_password.parent) return;
-      const password = confirm_password.parent.get(passwordField);
-      const passwordSubscripe = password.valueChanges.subscribe(() => {
-        confirm_password.updateValueAndValidity();
-        passwordSubscripe.unsubscribe();
-      });
-      if (confirm_password.value === password.value)
-        return;
-      return { compare: true };
-    }
-  }
+
 }
