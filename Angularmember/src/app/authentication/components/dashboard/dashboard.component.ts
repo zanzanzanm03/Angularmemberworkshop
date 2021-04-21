@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 declare const $;
 declare const Chart;
-declare const App;
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.initialLoadChartJS();
-    App.initialLoadPage();
+
   }
 
   // Run Chart js

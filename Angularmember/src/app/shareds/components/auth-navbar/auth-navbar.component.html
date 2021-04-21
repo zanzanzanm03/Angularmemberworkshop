@@ -6,7 +6,7 @@
   <!-- Navbar Right Menu-->
   <ul class="app-nav">
       <li class="app-search">
-          <input class="app-search__input" type="search" placeholder="Search">
+          <input class="app-search__input" type="search" placeholder="ค้นหาข้อมูล">
           <button class="app-search__button">
               <i class="fa fa-search"></i>
           </button>
@@ -118,16 +118,16 @@
           </a>
           <ul class="dropdown-menu settings-menu dropdown-menu-right">
               <li>
-                  <a class="dropdown-item" href="page-user.html">
-                      <i class="fa fa-cog fa-lg"></i> Settings</a>
+                  <a class="dropdown-item" [routerLink]="['/', AppURL.Authen, AuthURL.Setting]">
+                      <i class="fa fa-cog fa-lg"></i> ตั้งค่าระบบ</a>
               </li>
               <li>
-                  <a class="dropdown-item" href="page-user.html">
-                      <i class="fa fa-user fa-lg"></i> Profile</a>
+                  <a class="dropdown-item" [routerLink]="['/', AppURL.Authen, AuthURL.Profile]">
+                      <i class="fa fa-user fa-lg"></i> ข้อมูลส่วนตัว</a>
               </li>
               <li>
-                  <a class="dropdown-item" href="page-login.html">
-                      <i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                  <a class="dropdown-item" [routerLink]="['/', AppURL.Login]">
+                      <i class="fa fa-sign-out fa-lg"></i> ออกจากระบบ</a>
               </li>
           </ul>
       </li>
