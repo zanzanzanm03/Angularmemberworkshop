@@ -58,4 +58,26 @@ export class MemberService {
             resolve(this.account.mockUserItems.splice(findIndex, 1));
         });
     }
+
+    // แก้ไขสมาชิก
+    updateMember(id: any, model: IAccount) {
+        return new Promise<IAccount>((resolve, reject) => {
+            const member = this.account.mockUserItems.find(item => item.id == id);
+            if (!member) return reject({ Message: 'ไม่มีข้อมูลสมาชิกในระบบ' });
+            // ตรวจสอบว่ามีอีเมล์นี้ในระบบหรือยัง
+            if (this.account.mockUserItems.find(item => {
+                return item.email == model.email && model.email != member.email;
+            })) return reject({ Message: 'มีอีเมล์นี้อยู่ในระบบแล้ว' });
+
+            member.email = model.email;
+            member.password = model.password || member.password; // หากไม่กรอก password ให้ใช้ตัวเดิม
+            member.firstname = model.firstname;
+            member.lastname = model.lastname;
+            member.position = model.position;
+            member.role = model.role;
+            member.image = model.image;
+            member.updated = new Date();
+            resolve(member);
+        });
+    }
 }

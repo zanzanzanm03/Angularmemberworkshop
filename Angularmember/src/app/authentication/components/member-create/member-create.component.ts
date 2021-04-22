@@ -54,13 +54,26 @@ export class MemberCreateComponent implements IMemberCreateComponent {
   onSubmit(): void {
     if (this.form.invalid)
       return this.alert.someting_wrong();
-    this.member
-      .createMemeber(this.form.value)
-      .then(res => {
-        this.alert.notify('บันทึกข้อมูลสำเร็จ', 'info');
-        this.router.navigate(['/', AppURL.Authen, AuthURL.Member]);
-      })
-      .catch(err => this.alert.notify(err.Message));
+    // หากเป็นการเพิ่มสมาชิกใหม่
+    if (!this.memId) {
+      this.member
+        .createMemeber(this.form.value)
+        .then(res => {
+          this.alert.notify('บันทึกข้อมูลสำเร็จ', 'info');
+          this.router.navigate(['/', AppURL.Authen, AuthURL.Member]);
+        })
+        .catch(err => this.alert.notify(err.Message));
+    }
+    // หากเป็นการแก้ไขสมาชิก
+    else {
+      this.member
+        .updateMember(this.memId, this.form.value)
+        .then(res => {
+          this.alert.notify('แก้ไขข้อมูลสำเร็จ', 'info');
+          this.router.navigate(['/', AppURL.Authen, AuthURL.Member]);
+        })
+        .catch((err) => this.alert.notify(err.Message));
+    }
   }
 
   // แสดงข้อมูลสิทธิ์ผู้ใช้เป็นตัวหนังสือ
