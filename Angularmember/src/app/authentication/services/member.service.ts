@@ -40,4 +40,13 @@ export class MemberService {
             resolve(model);
         });
     }
+
+    // ลบข้อมูลสมาชิก
+    deleteMember(id: any) {
+        return new Promise((resolve, reject) => {
+            const findIndex = this.account.mockUserItems.findIndex(item => item.id == id);
+            if (findIndex < 0) return reject({ Message: 'ไม่มีข้อมูลนี้ในระบบ' });
+            resolve(this.account.mockUserItems.splice(findIndex, 1));
+        });
+    }
 }

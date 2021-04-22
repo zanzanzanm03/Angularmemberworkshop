@@ -51,9 +51,24 @@ export class MembersComponent implements IMembersComponent {
   onDeleteMember(item: IAccount) {
     this.alert.confirm().then(status => {
       if (!status) return;
-      console.log(item);
-    });
+      this.member
+        .deleteMember(item.id)
+        .then(() => {
+          // โหลดข้อมูล Member ใหม่
+          this.initialLoadMembers({
+            searchText: this.getSearchText,
+            searchType: this.serachType.key,
 
+          });
+          this.alert.notify('ลบข้อมูลสำเร็จ', 'info');
+        })
+        .catch(err => this.alert.notify(err.Message));
+    });
+  }
+
+  // ตรวจสอบและ return ค่า searchText
+  private get getSearchText() {
+    return this.serachType.key == 'role' ? IRoleAccount[this.searchText] || '' : this.searchText;
   }
 
 
