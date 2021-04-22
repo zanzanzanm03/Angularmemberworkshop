@@ -27,26 +27,22 @@
                     <div class="input-group">
                         <div class="input-group-prepend" dropdown>
                             <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
-                                ค้นหาจาก
+                                {{ serachType.value }}
                                 <span class="caret"></span>
                             </button>
                             <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                                <li role="menuitem">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                </li>
-                                <li role="menuitem">
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                </li>
-                                <li role="menuitem">
-                                    <a class="dropdown-item" href="#">Something else here</a>
+                                <li *ngFor="let item of searchTypeItems" role="menuitem">
+                                    <a class="dropdown-item" (click)="serachType = item">
+                                        {{ item.value }}
+                                    </a>
                                 </li>
                             </ul>
                         </div>
 
-                        <input type="text" class="form-control" placeholder="ค้นหาข้อมูล">
+                        <input type="text" [(ngModel)]="searchText" class="form-control" placeholder="ค้นหาข้อมูล">
 
                         <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
+                            <button (click)="onSearchItem()" class="btn btn-primary" type="button">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
@@ -77,9 +73,9 @@
                                 <td>{{ getRoleName(item.role) }}</td>
                                 <td>{{ item.updated | date : 'dd-MM-yyyy' }}</td>
                                 <td class="text-right">
-                                    <i class="fa fa-edit"></i>
+                                    <i class="fa fa-edit cur"></i>
                                     <span> | </span>
-                                    <i class="fa fa-trash"></i>
+                                    <i (click)="onDeleteMember(item)" class="fa fa-trash cur"></i>
                                 </td>
                             </tr>
                         </tbody>

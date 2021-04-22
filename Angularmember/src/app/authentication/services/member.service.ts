@@ -1,14 +1,30 @@
 import { Injectable } from "@angular/core";
 import { AccountService, IAccount } from '../../shareds/services/account.service';
+import { IMemberSearch } from "../components/members/members.interface";
 
 @Injectable()
 export class MemberService {
     constructor(private account: AccountService) { }
 
     // ดึงข้อมูลสมาชิกทังหมด
-    getMembers() {
+    getMembers(options?: IMemberSearch) {
         return new Promise<IAccount[]>((resolve, reject) => {
-            resolve(this.account.mockUserItems);
+            // เรียงลำดับข้อมูลใหม่จาก วันที่แก้ไขล่าสุด
+            let items = this.account.mockUserItems.sort((a1, a2) => {
+                return Date.parse(a2.updated.toString()) - Date.parse(a1.updated.toString());
+            });
+
+            // หากมีการค้นหาข้อมูล
+            if (options && options.searchText && options.searchType) {
+                // ค้นหาข้อมูลมาเก็บไว้ในตัวแปร items
+                items = this.account
+                    .mockUserItems
+                    .filter(item =>
+                        item[options.searchType].toString().toLowerCase()
+                            .indexOf(options.searchText.toString().toLowerCase()) >= 0
+                    );
+            }
+            resolve(items);
         });
     }
 
