@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppURL } from 'src/app/app.url';
 import { AuthURL } from 'src/app/authentication/authentication.url';
 import { AuthenService } from 'src/app/services/authen.service';
@@ -20,8 +20,13 @@ export class LoginComponent implements ILoginComponent {
     private alert: AlertService,
     private router: Router,
     private account: AccountService,
-    private authen: AuthenService
+    private authen: AuthenService,
+    private activateRoute: ActivatedRoute
   ) {
+    // เก็บค่า return url เพื่อไปหน้าที่เข้าไว้หลังจาก login
+    this.activateRoute.params.forEach(params => {
+      this.returnURL = params.returnURL || `/${AppURL.Authen}/${AuthURL.Dashboard}`;
+    });
     this.initialCreateFormData();
   }
 
@@ -29,6 +34,7 @@ export class LoginComponent implements ILoginComponent {
 
 
   Url = AppURL;
+  returnURL: string;
   form: FormGroup;
 
   // เข้าสุ่ระบบ
@@ -42,7 +48,7 @@ export class LoginComponent implements ILoginComponent {
         this.authen.setAuthenticated(res.accessToken);
         // alert และ redirect หน้า page
         this.alert.notify('เข้าสู่ระบบสำเร็จ', 'info');
-        this.router.navigate(['/', AppURL.Authen, AuthURL.Dashboard]);
+        this.router.navigateByUrl(this.returnURL);
       })
       .catch(err => this.alert.notify(err.Message));
   }
