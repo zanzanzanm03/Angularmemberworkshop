@@ -4,6 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { AuthenService } from 'src/app/services/authen.service';
 import { AccountService } from 'src/app/shareds/services/account.service';
 import { AlertService } from 'src/app/shareds/services/alert.service';
+import { SharedsService } from 'src/app/shareds/services/shareds.service';
 import { IProfileComponent } from './profile.interface';
 
 @Component({
@@ -17,18 +18,18 @@ export class ProfileComponent implements IProfileComponent {
     private account: AccountService,
     private authen: AuthenService,
     private alert: AlertService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private shareds: SharedsService
   ) {
     this.initialCreateFormData();
     this.initialLoadUpdateFormData();
+    // เพิ่ม position
+    this.positionItems = this.shareds.positionItems;
   }
 
   form: FormGroup;
   modalRef: BsModalRef;
-  positionItems: any[] = [
-    'student1',
-    'student2'
-  ];
+  positionItems: any[] = [];
 
   // บันทึกข้อมูล
   onSubmit() {
