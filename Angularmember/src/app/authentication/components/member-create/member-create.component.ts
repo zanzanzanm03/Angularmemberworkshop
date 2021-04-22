@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IRoleAccount } from 'src/app/shareds/services/account.service';
+import { AlertService } from 'src/app/shareds/services/alert.service';
 import { SharedsService } from 'src/app/shareds/services/shareds.service';
 import { IMemberCreateComponent } from './member-create.interface';
 
@@ -13,7 +14,8 @@ export class MemberCreateComponent implements IMemberCreateComponent {
 
   constructor(
     private shareds: SharedsService,
-    private builder: FormBuilder
+    private builder: FormBuilder,
+    private alert: AlertService
 
   ) {
     this.initialCreateFormData();
@@ -40,6 +42,16 @@ export class MemberCreateComponent implements IMemberCreateComponent {
   getRoleName(role: IRoleAccount): String {
     return IRoleAccount[role];
   }
+
+  // แสดงตัวอย่างภาพอัพโหลด
+  onConvertImage(input: HTMLInputElement) {
+    const imageControl = this.form.controls['image'];
+    this.shareds
+      .onConvertImage(input)
+      .then(base64 => imageControl.setValue(base64))
+      .catch(err => this.alert.notify(err.Message));
+  }
+
 
   // สร้างฟอร์ม
   private initialCreateFormData() {

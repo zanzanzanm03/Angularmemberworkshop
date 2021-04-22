@@ -43,21 +43,13 @@ export class ProfileComponent implements IProfileComponent {
   // แปลงไฟล์รูปเป็น Base64
   onConvertImage(input: HTMLInputElement) {
     const imageControl = this.form.controls['image'];
-    const imageTypes = ['image/jpeg', 'image/png'];
-
-    imageControl.setValue(null);
-    if (input.files.length == 0) return;
-    // ตรวจสอบชนิดไฟล์ที่อัพโหลดเข้ามา
-    if (imageTypes.indexOf(input.files[0].type) < 0) {
-      input.value = null;
-      return this.alert.notify('กรุณาอัพโหลดรูปภาพเท่านั้น');
-    }
-
-    const reader = new FileReader();
-    reader.readAsDataURL(input.files[0]);
-    reader.addEventListener('load', () => {
-      imageControl.setValue(reader.result);
-    });
+    this.shareds
+      .onConvertImage(input)
+      .then(base64 => imageControl.setValue(base64))
+      .catch(err => {
+        input.value = null;
+        this.alert.notify(err.Message);
+      });
   }
 
   // เปิด Modal dialog
