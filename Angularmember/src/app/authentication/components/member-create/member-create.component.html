@@ -29,7 +29,7 @@
 
             <!-- ส่วนฟอร์ม -->
             <div class="tile-body">
-                <form>
+                <form [formGroup]="form" (submit)="onSubmit()">
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
@@ -42,25 +42,25 @@
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <label for="">อีเมล์</label>
-                                <input type="text" class="form-control" placeholder="กรุณากรอกข้อมูล">
+                                <input type="text" class="form-control" placeholder="กรุณากรอกข้อมูล" formControlName="email">
                             </div>
 
                             <div class="form-group">
                                 <label for="">รหัสผ่าน</label>
-                                <input type="text" class="form-control" placeholder="กรุณากรอกข้อมูล">
+                                <input type="text" class="form-control" placeholder="กรุณากรอกข้อมูล" formControlName="password">
                             </div>
 
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="">ชื่อ</label>
-                                        <input type="text" class="form-control" placeholder="กรุณากรอกข้อมูล">
+                                        <input type="text" class="form-control" placeholder="กรุณากรอกข้อมูล" formControlName="firstname">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="">นามสกุล</label>
-                                        <input type="text" class="form-control" placeholder="กรุณากรอกข้อมูล">
+                                        <input type="text" class="form-control" placeholder="กรุณากรอกข้อมูล" formControlName="lastname">
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="">ตำแหน่ง</label>
-                                        <select class="form-control">
+                                        <select class="form-control" formControlName="position">
                                             <option value="">เลือกตำแหน่งงาน</option>
                                             <option *ngFor="let item of positionItems" [value]="item">
                                                 {{ item }}
@@ -80,7 +80,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="">สิทธิ์ผู้ใช้งาน</label>
-                                        <select class="form-control">
+                                        <select class="form-control" formControlName="role">
                                             <option value="">เลือกสิทธิ์ผู้ใช้งาน</option>
                                             <option *ngFor="let item of roleItems" [value]="item">
                                                 {{ getRoleName(item) }}
