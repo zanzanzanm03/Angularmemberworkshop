@@ -2,11 +2,17 @@ import { Injectable } from '@angular/core';
 import { IChangePassword } from 'src/app/authentication/components/profile/change-password/change-password.interface';
 import { IProfile } from 'src/app/authentication/components/profile/profile.interface';
 import { ILogin } from 'src/app/components/login/login.interface';
+import { HttpService } from 'src/app/services/http.service';
 import { IRegister } from '../../components/register/register.interface';
 @Injectable({
     providedIn: 'root'
 })
 export class AccountService {
+    constructor(
+        private http: HttpService
+    ) { }
+
+
 
     public mockUserItems: IAccount[] = [
         {
