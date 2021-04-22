@@ -11,4 +11,17 @@ export class MemberService {
             resolve(this.account.mockUserItems);
         });
     }
+
+    // เพิ่มข้อมูลสมาชิก
+    createMemeber(model: IAccount) {
+        return new Promise((resolve, reject) => {
+            if (this.account.mockUserItems.find(item => item.email == model.email))
+                return reject({ Message: 'อีเมล์นี้มีในระบบแล้ว' });
+            model.id = Math.random();
+            model.created = new Date();
+            model.updated = new Date();
+            this.account.mockUserItems.push(model);
+            resolve(model);
+        });
+    }
 }

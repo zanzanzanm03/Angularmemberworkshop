@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AppURL } from 'src/app/app.url';
 import { IRoleAccount } from 'src/app/shareds/services/account.service';
 import { AlertService } from 'src/app/shareds/services/alert.service';
 import { SharedsService } from 'src/app/shareds/services/shareds.service';
 import { ValidatorsService } from 'src/app/shareds/services/validators.service';
+import { AuthURL } from '../../authentication.url';
+import { MemberService } from '../../services/member.service';
 import { IMemberCreateComponent } from './member-create.interface';
 
 @Component({
   selector: 'app-member-create',
   templateUrl: './member-create.component.html',
-  styleUrls: ['./member-create.component.css']
+  styleUrls: ['./member-create.component.css'],
+  providers: [MemberService]
 })
 export class MemberCreateComponent implements IMemberCreateComponent {
 
@@ -17,7 +22,9 @@ export class MemberCreateComponent implements IMemberCreateComponent {
     private shareds: SharedsService,
     private builder: FormBuilder,
     private alert: AlertService,
-    private validators: ValidatorsService
+    private validators: ValidatorsService,
+    private member: MemberService,
+    private router: Router
 
   ) {
     this.initialCreateFormData();
@@ -39,8 +46,13 @@ export class MemberCreateComponent implements IMemberCreateComponent {
   onSubmit(): void {
     if (this.form.invalid)
       return this.alert.someting_wrong();
-
-    console.log(this.form.value);
+    this.member
+      .createMemeber(this.form.value)
+      .then(res => {
+        this.alert.notify('บันทึกข้อมูลสำเร็จ', 'info');
+        this.router.navigate(['/', AppURL.Authen, AuthURL.Member]);
+      })
+      .catch(err => this.alert.notify(err.Message));
   }
 
   // แสดงข้อมูลสิทธิ์ผู้ใช้เป็นตัวหนังสือ
