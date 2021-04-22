@@ -16,6 +16,12 @@ const RouteLists: Routes = [
     { path: AuthURL.Card, component: CardsComponent },
     { path: AuthURL.Member, component: MembersComponent },
     { path: AuthURL.MemberCreate, component: MemberCreateComponent },
+    {
+        path: AuthURL.MemberCreate, children: [
+            { path: '', component: MemberCreateComponent },
+            { path: ':id', component: MemberCreateComponent },
+        ]
+    }
 ];
 
 export const AuthenticationRouting = RouterModule.forChild(RouteLists);

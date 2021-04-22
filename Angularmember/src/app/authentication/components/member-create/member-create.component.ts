@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppURL } from 'src/app/app.url';
 import { IRoleAccount } from 'src/app/shareds/services/account.service';
 import { AlertService } from 'src/app/shareds/services/alert.service';
@@ -24,9 +24,15 @@ export class MemberCreateComponent implements IMemberCreateComponent {
     private alert: AlertService,
     private validators: ValidatorsService,
     private member: MemberService,
-    private router: Router
+    private router: Router,
+    private activatedRouter: ActivatedRoute
 
   ) {
+
+    this.activatedRouter.params.forEach(params => {
+      console.log(params);
+    });
+
     this.initialCreateFormData();
     // เพิ่ม position
     this.positionItems = this.shareds.positionItems;

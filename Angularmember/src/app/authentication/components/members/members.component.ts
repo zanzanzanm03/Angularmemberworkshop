@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AppURL } from 'src/app/app.url';
 import { IAccount, IRoleAccount } from 'src/app/shareds/services/account.service';
 import { AlertService } from 'src/app/shareds/services/alert.service';
+import { AuthURL } from '../../authentication.url';
 import { MemberService } from '../../services/member.service';
 import { IMembersComponent, IMemberSearch, IMemberSearchKey } from './members.interface';
 
@@ -13,7 +16,8 @@ import { IMembersComponent, IMemberSearch, IMemberSearchKey } from './members.in
 export class MembersComponent implements IMembersComponent {
   constructor(
     private member: MemberService,
-    private alert: AlertService
+    private alert: AlertService,
+    private router: Router
   ) {
     this.initialLoadMembers();
     // กำหนดค่าเริ่มให้กับ searchType
@@ -64,6 +68,15 @@ export class MembersComponent implements IMembersComponent {
         })
         .catch(err => this.alert.notify(err.Message));
     });
+  }
+
+  // แก้ไขข้อมูลสมาชิกโดยส่ง id ไปยัง url
+  onUpdateMember(item: IAccount) {
+    this.router.navigate(['',
+      AppURL.Authen,
+      AuthURL.MemberCreate,
+      item.id
+    ]);
   }
 
   // ตรวจสอบและ return ค่า searchText

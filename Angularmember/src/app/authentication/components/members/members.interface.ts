@@ -11,6 +11,7 @@ export interface IMembersComponent {
 
     getRoleName(role: IRoleAccount): string;
     onDeleteMember(item: IAccount): void;
+    onUpdateMember(item: IAccount): void;
 }
 
 export interface IMemberSearch {
