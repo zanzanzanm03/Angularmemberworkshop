@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IRoleAccount } from 'src/app/shareds/services/account.service';
 import { AlertService } from 'src/app/shareds/services/alert.service';
 import { SharedsService } from 'src/app/shareds/services/shareds.service';
+import { ValidatorsService } from 'src/app/shareds/services/validators.service';
 import { IMemberCreateComponent } from './member-create.interface';
 
 @Component({
@@ -15,7 +16,8 @@ export class MemberCreateComponent implements IMemberCreateComponent {
   constructor(
     private shareds: SharedsService,
     private builder: FormBuilder,
-    private alert: AlertService
+    private alert: AlertService,
+    private validators: ValidatorsService
 
   ) {
     this.initialCreateFormData();
@@ -35,6 +37,9 @@ export class MemberCreateComponent implements IMemberCreateComponent {
 
   // บันทึกหรือแก้ไขข้อมูล
   onSubmit(): void {
+    if (this.form.invalid)
+      return this.alert.someting_wrong();
+
     console.log(this.form.value);
   }
 
@@ -49,20 +54,25 @@ export class MemberCreateComponent implements IMemberCreateComponent {
     this.shareds
       .onConvertImage(input)
       .then(base64 => imageControl.setValue(base64))
-      .catch(err => this.alert.notify(err.Message));
+      .catch(err => {
+        input.value = null;
+        imageControl.setValue(null);
+        this.alert.notify(err.Message);
+      });
   }
+
 
 
   // สร้างฟอร์ม
   private initialCreateFormData() {
     this.form = this.builder.group({
       image: [],
-      email: [],
-      password: [],
-      firstname: [],
-      lastname: [],
-      position: [''],
-      role: ['']
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, this.validators.isPassword]],
+      firstname: ['', [Validators.required]],
+      lastname: ['', [Validators.required]],
+      position: ['', [Validators.required]],
+      role: ['', [Validators.required]]
     });
   }
 
