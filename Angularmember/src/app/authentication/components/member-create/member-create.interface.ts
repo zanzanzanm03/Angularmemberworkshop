@@ -3,6 +3,7 @@ import { IRoleAccount } from "src/app/shareds/services/account.service";
 
 export interface IMemberCreateComponent {
     positionItems: String[];
+    memId: any;
     roleItems: IRoleAccount[];
     form: FormGroup;
 

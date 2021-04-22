@@ -30,16 +30,18 @@ export class MemberCreateComponent implements IMemberCreateComponent {
   ) {
 
     this.activatedRouter.params.forEach(params => {
-      console.log(params);
+      this.memId = params.id;
     });
 
     this.initialCreateFormData();
+    this.initialUpdateFormData();
     // เพิ่ม position
     this.positionItems = this.shareds.positionItems;
   }
 
 
   form: FormGroup;
+  memId: any;
   positionItems: String[];
   roleItems: IRoleAccount[] = [
     IRoleAccount.Member,
@@ -94,6 +96,26 @@ export class MemberCreateComponent implements IMemberCreateComponent {
     });
   }
 
+  // แก้ไขฟอร์ม
+  private initialUpdateFormData() {
+    if (!this.memId) return;
+    this.member
+      .getMemberById(this.memId)
+      .then(member => {
+        // นำข้อมูลใส่ฟอร์ม
+        const form = this.form;
+        form.controls['image'].setValue(member.image);
+        form.controls['email'].setValue(member.email);
+        form.controls['firstname'].setValue(member.firstname);
+        form.controls['lastname'].setValue(member.lastname);
+        form.controls['position'].setValue(member.position);
+        form.controls['role'].setValue(member.role);
+      })
+      .catch(err => {
+        this.alert.notify(err.Message);
+        this.router.navigate(['/', AppURL.Authen, AuthURL.Member]);
+      });
+  }
 
 
 }

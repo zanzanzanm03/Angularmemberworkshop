@@ -28,6 +28,15 @@ export class MemberService {
         });
     }
 
+    // ดึงข้อมูลสมาชิกคนเดียว
+    getMemberById(id) {
+        return new Promise<IAccount>((resolve, reject) => {
+            const member = this.account.mockUserItems.find(item => item.id == id);
+            if (!member) return reject({ Message: 'ไม่มีข้อมูลสมาชิกในระบบ' });
+            resolve(member);
+        });
+    }
+
     // เพิ่มข้อมูลสมาชิก
     createMemeber(model: IAccount) {
         return new Promise((resolve, reject) => {
