@@ -110,6 +110,7 @@ export class MemberCreateComponent implements IMemberCreateComponent {
         form.controls['lastname'].setValue(member.lastname);
         form.controls['position'].setValue(member.position);
         form.controls['role'].setValue(member.role);
+        form.controls['password'].setValidators(this.validators.isPassword);
       })
       .catch(err => {
         this.alert.notify(err.Message);
