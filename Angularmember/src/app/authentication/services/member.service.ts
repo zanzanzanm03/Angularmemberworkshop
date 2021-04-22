@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
-import { AccountService, IAccount } from '../../shareds/services/account.service';
+import { AccountService, IAccount, IRoleAccount } from '../../shareds/services/account.service';
 import { IMemberSearch } from "../components/members/members.interface";
 
 @Injectable()
 export class MemberService {
-    constructor(private account: AccountService) { }
+    constructor(private account: AccountService) {
+        this.generateMembers();
+    }
 
     // ดึงข้อมูลสมาชิกทังหมด
     getMembers(options?: IMemberSearch) {
@@ -37,6 +39,8 @@ export class MemberService {
         });
     }
 
+
+
     // เพิ่มข้อมูลสมาชิก
     createMemeber(model: IAccount) {
         return new Promise((resolve, reject) => {
@@ -49,6 +53,7 @@ export class MemberService {
             resolve(model);
         });
     }
+
 
     // ลบข้อมูลสมาชิก
     deleteMember(id: any) {
@@ -79,5 +84,23 @@ export class MemberService {
             member.updated = new Date();
             resolve(member);
         });
+    }
+
+    // จำลองข้อมูลสมาชิก เพื่อทำ pagination
+    private generateMembers() {
+        const positions = ['Frontend Developer', 'Backend Developer'];
+        const roles = [IRoleAccount.Member, IRoleAccount.Users, IRoleAccount.Admin];
+        for (let i = 3; i <= 333; i++)
+            this.account.mockUserItems.push({
+                id: i.toString(),
+                firstname: `Firstname ${i}`,
+                lastname: `Lastname ${i}`,
+                email: `mail-${i}@mail.com`,
+                password: '123456',
+                position: positions[Math.round(Math.random() * 1)],
+                role: roles[Math.round(Math.random() * 2)],
+                created: new Date(),
+                updated: new Date()
+            });
     }
 }
