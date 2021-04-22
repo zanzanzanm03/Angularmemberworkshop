@@ -89,17 +89,9 @@ export class AccountService {
     }
     // ลงทะเบียน
     onRegister(model: IRegister) {
-        return new Promise((resolve, reject) => {
-            const _model: IAccount = model;
-            _model.id = Math.random();
-            _model.image = null;
-            _model.position = '';
-            _model.role = IRoleAccount.Member;
-            _model.created = new Date();
-            _model.updated = new Date();
-            this.mockUserItems.push(model);
-            resolve(model);
-        });
+        return this.http
+            .requestPost('api/account/register', model)
+            .toPromise() as Promise<IAccount>;
     }
 
 }
